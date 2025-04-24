@@ -3,15 +3,18 @@ import {
   MapPin, 
   Users,
   Film, 
-  Pizza, 
-  Popcorn
+  Popcorn,
+  ExternalLink
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 type EventCardProps = {
   date: string;
   time: string;
   location: string;
+  locationDetails: string;
+  mapLink: string;
   schedule: Array<{time: string, activity: string}>;
 };
 
@@ -19,6 +22,8 @@ const EventCard = ({
   date,
   time,
   location,
+  locationDetails,
+  mapLink,
   schedule
 }: EventCardProps) => {
   return (
@@ -38,7 +43,19 @@ const EventCard = ({
           <h3 className="text-lg font-medium text-elegant-dark flex items-center gap-2">
             <MapPin size={18} className="text-elegant-accent" /> Где
           </h3>
-          <p className="pl-7 mt-2 text-elegant-dark">{location}</p>
+          <div className="pl-7 mt-2">
+            <p className="text-elegant-dark">{location}</p>
+            <p className="text-sm text-muted-foreground mb-2">{locationDetails}</p>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="flex items-center gap-1.5 text-elegant-accent" 
+              onClick={() => window.open(mapLink, '_blank')}
+            >
+              <ExternalLink size={14} />
+              <span>Открыть на карте</span>
+            </Button>
+          </div>
         </div>
         
         <div>

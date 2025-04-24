@@ -1,8 +1,15 @@
 import { useState } from "react";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { CalendarPlus } from "lucide-react";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+
+const formSchema = z.object({
+  name: z.string().min(2, { message: "Имя должно содержать минимум 2 символа" }),
+  telegram: z.string().min(1, { message: "Пожалуйста, укажите ваш ник в Telegram" }),
+});
 
 type RsvpFormProps = {
   onSuccess: () => void;
@@ -10,94 +17,87 @@ type RsvpFormProps = {
 
 const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    telegram: "",
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      telegram: "",
+    },
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     
     try {
-      // Отправка данных через FormSubmit сервис
-      const formElement = e.target as HTMLFormElement;
-      const formData = new FormData(formElement);
+      // Формируем данные для отправки
+      const formData = new FormData();
+      formData.append('name', values.name);
+      formData.append('telegram', values.telegram);
+      formData.append('_subject', 'Новое подтверждение на День Рождения');
       
-      await fetch("https://formsubmit.co/xEsseax@yandex.ru", {
-        method: "POST",
+      // Отправляем данные через FormSubmit
+      await fetch('https://formsubmit.co/xEsseax@yandex.ru', {
+        method: 'POST',
         body: formData,
         headers: {
           'Accept': 'application/json',
         },
       });
       
-      // Показываем успешное подтверждение
+      // Вызываем функцию успешного подтверждения
       onSuccess();
+      
     } catch (error) {
-      console.error("Ошибка при отправке формы:", error);
-      alert("Произошла ошибка при отправке. Пожалуйста, попробуйте позже.");
+      console.error('Ошибка при отправке формы:', error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <form 
-      onSubmit={handleSubmit} 
-      className="w-full max-w-md space-y-4"
-    >
-      {/* Скрытые поля для настройки FormSubmit */}
-      <input type="hidden" name="_subject" value="Подтверждение на день рождения" />
-      <input type="hidden" name="_captcha" value="false" />
-      
-      <div className="space-y-2">
-        <Label htmlFor="name">Ваше имя</Label>
-        <Input
-          id="name"
-          name="name"
-          required
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Иван Иванов"
-          className="border-elegant-muted"
-        />
-      </div>
-      
-      <div className="space-y-2">
-        <Label htmlFor="telegram">Ник в Telegram для связи</Label>
-        <Input
-          id="telegram"
-          name="telegram"
-          required
-          value={formData.telegram}
-          onChange={handleChange}
-          placeholder="@username"
-          className="border-elegant-muted"
-        />
-      </div>
-      
-      <Button 
-        type="submit"
-        className="bg-elegant-accent hover:bg-elegant-accent/90 text-white font-medium flex items-center gap-2 animate-fade-in w-full"
-        size="lg"
-        disabled={isSubmitting}
+    <Form {...form}>
+      <form 
+        onSubmit={form.handleSubmit(handleSubmit)} 
+        className="space-y-4 w-full"
       >
-        {isSubmitting ? (
-          <span>Отправка...</span>
-        ) : (
-          <>
-            <CalendarPlus size={18} />
-            <span>Подтвердить присутствие</span>
-          </>
-        )}
-      </Button>
-    </form>
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Ваше имя</FormLabel>
+              <FormControl>
+                <Input placeholder="Иван Иванов" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <FormField
+          control={form.control}
+          name="telegram"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Ник в Telegram для связи</FormLabel>
+              <FormControl>
+                <Input placeholder="@username" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <Button 
+          type="submit" 
+          className="w-full bg-elegant-accent hover:bg-elegant-accent/90"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Отправка..." : "Подтвердить присутствие"}
+        </Button>
+      </form>
+    </Form>
   );
 };
 

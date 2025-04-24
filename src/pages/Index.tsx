@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Card, 
   CardContent
@@ -7,6 +7,7 @@ import { Check } from "lucide-react";
 import InvitationHeader from "@/components/InvitationHeader";
 import EventCard from "@/components/EventCard";
 import RsvpForm from "@/components/RsvpForm";
+import VenueGallery from "@/components/VenueGallery";
 
 const Index = () => {
   const [rsvpConfirmed, setRsvpConfirmed] = useState(false);
@@ -18,12 +19,12 @@ const Index = () => {
   };
 
   // Проверяем статус при загрузке страницы
-  useState(() => {
+  useEffect(() => {
     const savedStatus = localStorage.getItem('rsvpConfirmed');
     if (savedStatus === 'true') {
       setRsvpConfirmed(true);
     }
-  });
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-elegant-light py-10">
@@ -34,25 +35,31 @@ const Index = () => {
         />
         
         <div className="flex flex-col md:flex-row gap-6 mb-10 w-full justify-center">
-          <EventCard 
-            date="18 мая, суббота"
-            time="с 18:20 до 22:00"
-            location="Лофт 'Атмосфера'"
-            schedule={[
-              {
-                time: "18:20 - 18:40",
-                activity: "Сбор гостей"
-              },
-              {
-                time: "18:40 - 20:40",
-                activity: "Просмотр фильма \"Конклав\""
-              },
-              {
-                time: "20:40 - 22:00",
-                activity: "Обнимаемся, разъезжаемся, готовимся не умереть утром понедельника"
-              }
-            ]}
-          />
+          <div className="flex flex-col gap-6">
+            <EventCard 
+              date="18 мая 2025, воскресенье"
+              time="с 18:20 до 22:00"
+              location="Кинотеатр «Секрет», зал «Сад»"
+              locationDetails="ул. Щербаковская, 53к17 (м. Измайлово, м. Партизанская, м. Семёновская)"
+              mapLink="https://clck.ru/3CegJG"
+              schedule={[
+                {
+                  time: "18:20 - 18:40",
+                  activity: "Сбор гостей"
+                },
+                {
+                  time: "18:40 - 20:40",
+                  activity: "Просмотр фильма \"Конклав\""
+                },
+                {
+                  time: "20:40 - 22:00",
+                  activity: "Обнимаемся, разъезжаемся, готовимся не умереть утром понедельника"
+                }
+              ]}
+            />
+            
+            <VenueGallery />
+          </div>
           
           <Card className="invitation-card animate-fade-in max-w-md bg-white border-elegant">
             <CardContent className="p-6 flex flex-col items-center justify-center h-full">
