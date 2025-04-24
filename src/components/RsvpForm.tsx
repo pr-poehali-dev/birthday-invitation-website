@@ -24,46 +24,25 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    try {
-      // Настройка отправки данных через EmailJS или другой сервис
-      const serviceId = "default_service"; // Замените на ваш serviceId в EmailJS
-      const templateId = "template_birthday_rsvp"; // Замените на ваш templateId
-      const userId = "user_yourUserId"; // Замените на ваш userId
-
-      const templateParams = {
-        to_email: "xEsseax@yandex.ru",
-        from_name: formData.name,
-        from_email: formData.email,
-        message: `${formData.name} подтвердил(а) присутствие на дне рождения.`,
-      };
-
-      // В реальном приложении используйте EmailJS или аналогичный сервис:
-      // await emailjs.send(serviceId, templateId, templateParams, userId);
-      
-      // Имитация отправки данных (в реальном проекте замените на реальный запрос)
-      console.log("Отправка данных на почту xEsseax@yandex.ru:", templateParams);
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+    // Простая отправка через стандартный mailto: протокол 
+    // Это откроет почтовый клиент пользователя
+    const mailtoLink = `mailto:xEsseax@yandex.ru?subject=Подтверждение на день рождения&body=Имя: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AЯ подтверждаю своё присутствие на дне рождения 18 мая.`;
+    
+    window.location.href = mailtoLink;
+    
+    // Показываем успешное подтверждение даже если пользователь
+    // закрыл почтовый клиент без отправки
+    setTimeout(() => {
       onSuccess();
-    } catch (error) {
-      console.error("Ошибка при отправке:", error);
-      alert("Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.");
-    } finally {
       setIsSubmitting(false);
-    }
+    }, 1000);
   };
 
   return (
     <form 
       onSubmit={handleSubmit} 
       className="w-full max-w-md space-y-4"
-      action="https://formsubmit.co/xEsseax@yandex.ru" 
-      method="POST"
     >
-      <input type="hidden" name="_subject" value="Новое подтверждение на день рождения!" />
-      <input type="hidden" name="_captcha" value="false" />
-      <input type="hidden" name="_next" value={window.location.href} />
-      
       <div className="space-y-2">
         <Label htmlFor="name">Ваше имя</Label>
         <Input
@@ -106,6 +85,10 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
           </>
         )}
       </Button>
+      
+      <p className="text-xs text-center text-muted-foreground mt-2">
+        Нажимая кнопку, вы соглашаетесь на открытие почтового клиента
+      </p>
     </form>
   );
 };
