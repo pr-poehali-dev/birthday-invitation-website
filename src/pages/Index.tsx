@@ -3,7 +3,7 @@ import {
   Card, 
   CardContent
 } from "@/components/ui/card";
-import { Check, MapPin } from "lucide-react";
+import { Check } from "lucide-react";
 import InvitationHeader from "@/components/InvitationHeader";
 import EventCard from "@/components/EventCard";
 import RsvpForm from "@/components/RsvpForm";

@@ -1,31 +1,36 @@
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Card, CardContent } from "@/components/ui/card";
 
 const VenueGallery = () => {
-  // Обычно здесь были бы настоящие изображения места проведения
-  // Используем placeholder.svg в качестве заглушки
+  // Массив с изображениями места проведения
+  // В реальном проекте здесь будут настоящие изображения лофта
   const images = [
-    { src: "/placeholder.svg", alt: "Вид лофта" },
-    { src: "/placeholder.svg", alt: "Интерьер" },
-    { src: "/placeholder.svg", alt: "Кинозал" },
+    "/placeholder.svg",
+    "/placeholder.svg",
+    "/placeholder.svg",
   ];
 
   return (
-    <div className="animate-fade-in w-full max-w-md">
-      <h3 className="text-lg font-medium text-elegant-dark mb-3">Галерея места</h3>
-      <div className="grid grid-cols-3 gap-2">
-        {images.map((image, index) => (
-          <div key={index} className="overflow-hidden rounded-md border border-elegant">
-            <AspectRatio ratio={1 / 1}>
+    <Card className="invitation-card animate-fade-in w-full max-w-md bg-white border-elegant">
+      <CardContent className="p-4">
+        <h3 className="text-elegant-dark font-medium mb-3 text-center">
+          Место проведения
+        </h3>
+        <div className="grid grid-cols-3 gap-2">
+          {images.map((image, index) => (
+            <div 
+              key={index} 
+              className="aspect-square rounded-md overflow-hidden"
+            >
               <img
-                src={image.src}
-                alt={image.alt}
-                className="object-cover h-full w-full hover:scale-110 transition-transform duration-300"
+                src={image}
+                alt={`Место проведения ${index + 1}`}
+                className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
               />
-            </AspectRatio>
-          </div>
-        ))}
-      </div>
-    </div>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

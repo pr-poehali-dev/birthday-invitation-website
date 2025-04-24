@@ -1,108 +1,126 @@
 import { useState } from "react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 
-const formSchema = z.object({
-  name: z.string().min(2, { message: "Имя должно содержать минимум 2 символа" }),
-  email: z.string().email({ message: "Пожалуйста, введите корректный email" }),
-  guestCount: z.string().min(1, { message: "Пожалуйста, укажите количество гостей" }),
-});
-
-type RsvpFormProps = {
+interface RsvpFormProps {
   onSuccess: () => void;
-};
+}
 
 const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      guestCount: "1",
-    },
-  });
-
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    setIsSubmitting(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [guests, setGuests] = useState("1");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!name || !email) {
+      setError("Пожалуйста, заполните все обязательные поля");
+      return;
+    }
+    
+    setLoading(true);
+    setError("");
     
     try {
-      // Здесь будет отправка данных на сервер
-      // Симулируем задержку
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Используем сервис formsubmit.co для отправки данных формы на email
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("guests", guests);
+      formData.append("_subject", "Новое подтверждение на день рождения");
       
-      // Вызываем функцию успешного подтверждения
-      onSuccess();
+      // URL формата https://formsubmit.co/YOUR_EMAIL_HERE
+      const response = await fetch("https://formsubmit.co/xEsseax@yandex.ru", {
+        method: "POST",
+        body: formData,
+        headers: {
+          "Accept": "application/json"
+        }
+      });
       
-    } catch (error) {
-      console.error('Ошибка при отправке формы:', error);
+      if (response.ok) {
+        onSuccess();
+      } else {
+        throw new Error("Что-то пошло не так при отправке формы");
+      }
+    } catch (err) {
+      setError("Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.");
+      console.error("Form submission error:", err);
     } finally {
-      setIsSubmitting(false);
+      setLoading(false);
     }
   };
-
+  
   return (
-    <Form {...form}>
-      <form 
-        onSubmit={form.handleSubmit(handleSubmit)} 
-        className="space-y-4 w-full"
+    <form onSubmit={handleSubmit} className="w-full space-y-4">
+      <div>
+        <Label htmlFor="name" className="form-label">
+          Ваше имя *
+        </Label>
+        <Input
+          id="name"
+          type="text"
+          className="form-input"
+          placeholder="Иван Иванов"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+      </div>
+      
+      <div>
+        <Label htmlFor="email" className="form-label">
+          Email для связи *
+        </Label>
+        <Input
+          id="email"
+          type="email"
+          className="form-input"
+          placeholder="ivan@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
+      
+      <div>
+        <Label htmlFor="guests" className="form-label">
+          Количество гостей
+        </Label>
+        <Select value={guests} onValueChange={setGuests}>
+          <SelectTrigger className="form-input">
+            <SelectValue placeholder="Выберите количество гостей" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="1">1 (только я)</SelectItem>
+            <SelectItem value="2">2 (я + сопровождающий)</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      
+      {error && (
+        <p className="text-destructive text-sm">{error}</p>
+      )}
+      
+      <Button 
+        type="submit" 
+        className="w-full bg-elegant-accent hover:bg-elegant-accent/90"
+        disabled={loading}
       >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Ваше имя</FormLabel>
-              <FormControl>
-                <Input placeholder="Иван Иванов" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email для связи</FormLabel>
-              <FormControl>
-                <Input placeholder="ivan@example.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="guestCount"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Количество гостей</FormLabel>
-              <FormControl>
-                <Input type="number" min="1" max="5" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <Button 
-          type="submit" 
-          className="w-full bg-elegant-accent hover:bg-elegant-accent/90"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Отправка..." : "Подтвердить присутствие"}
-        </Button>
-      </form>
-    </Form>
+        {loading ? "Отправка..." : "Подтвердить присутствие"}
+      </Button>
+    </form>
   );
 };
 
