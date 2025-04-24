@@ -8,6 +8,7 @@ import InvitationHeader from "@/components/InvitationHeader";
 import EventCard from "@/components/EventCard";
 import RsvpForm from "@/components/RsvpForm";
 import VenueGallery from "@/components/VenueGallery";
+import GiftSection from "@/components/GiftSection";
 
 const Index = () => {
   const [rsvpConfirmed, setRsvpConfirmed] = useState(false);
@@ -58,36 +59,40 @@ const Index = () => {
               ]}
             />
             
-            <VenueGallery />
+            <GiftSection />
           </div>
           
-          <Card className="invitation-card animate-fade-in max-w-md bg-white border-elegant">
-            <CardContent className="p-6 flex flex-col items-center justify-center h-full">
-              <img 
-                src="/placeholder.svg" 
-                alt="Праздничное изображение" 
-                className="w-32 h-32 mb-6 rounded-full object-cover"
-              />
-              
-              <p className="text-center text-elegant-dark mb-6">
-                Будем рады видеть вас на нашем празднике! Пожалуйста, подтвердите своё присутствие.
-              </p>
-              
-              {rsvpConfirmed ? (
-                <div className="flex flex-col items-center gap-2 text-green-600 animate-fade-in">
-                  <div className="flex items-center gap-2">
-                    <Check className="w-5 h-5" />
-                    <span>Ваш ответ принят!</span>
+          <div className="flex flex-col gap-6">
+            <Card className="invitation-card animate-fade-in max-w-md bg-white border-elegant">
+              <CardContent className="p-6 flex flex-col items-center justify-center h-full">
+                <img 
+                  src="/placeholder.svg" 
+                  alt="Праздничное изображение" 
+                  className="w-32 h-32 mb-6 rounded-full object-cover"
+                />
+                
+                <p className="text-center text-elegant-dark mb-6">
+                  Будем рады видеть вас на нашем празднике! Пожалуйста, подтвердите своё присутствие.
+                </p>
+                
+                {rsvpConfirmed ? (
+                  <div className="flex flex-col items-center gap-2 text-green-600 animate-fade-in">
+                    <div className="flex items-center gap-2">
+                      <Check className="w-5 h-5" />
+                      <span>Ваш ответ принят!</span>
+                    </div>
+                    <p className="text-sm text-elegant-dark mt-2">
+                      Спасибо за подтверждение. Ждём вас на празднике!
+                    </p>
                   </div>
-                  <p className="text-sm text-elegant-dark mt-2">
-                    Спасибо за подтверждение. Ждём вас на празднике!
-                  </p>
-                </div>
-              ) : (
-                <RsvpForm onSuccess={handleRsvpSuccess} />
-              )}
-            </CardContent>
-          </Card>
+                ) : (
+                  <RsvpForm onSuccess={handleRsvpSuccess} />
+                )}
+              </CardContent>
+            </Card>
+            
+            <VenueGallery />
+          </div>
         </div>
         
         <footer className="text-center text-sm text-muted-foreground mt-12">
