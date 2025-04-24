@@ -8,7 +8,7 @@ type InvitationHeaderProps = {
 const InvitationHeader = ({ title, subtitle }: InvitationHeaderProps) => {
   return (
     <div className="text-center mb-10 animate-fade-in">
-      <h1 className="font-playfair text-4xl md:text-5xl text-elegant-dark mb-3 font-bold">
+      <h1 className="text-4xl md:text-5xl text-elegant-dark mb-3 font-medium">
         {title}
       </h1>
       {subtitle && (

@@ -1,56 +1,30 @@
-import { 
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext 
-} from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const VenueGallery = () => {
+  // Обычно здесь были бы настоящие изображения места проведения
+  // Используем placeholder.svg в качестве заглушки
   const images = [
-    {
-      url: "https://cdn.poehali.dev/files/61528098-cfbb-4592-9aae-647de3afd1c4.png",
-      description: "Проекционный экран в зале 'Сад'"
-    },
-    {
-      url: "https://cdn.poehali.dev/files/fe21c632-cadb-4032-a437-208e089990ce.png",
-      description: "Световая инсталляция с подвесными птицами"
-    },
-    {
-      url: "https://cdn.poehali.dev/files/8fb97502-c3ee-4edb-8b21-3dbdb41cfa4e.png",
-      description: "Уютный интерьер с винтажными фигурками"
-    }
+    { src: "/placeholder.svg", alt: "Вид лофта" },
+    { src: "/placeholder.svg", alt: "Интерьер" },
+    { src: "/placeholder.svg", alt: "Кинозал" },
   ];
 
   return (
-    <div className="w-full max-w-md mx-auto mt-6 animate-fade-in">
-      <h3 className="text-lg font-medium text-elegant-dark mb-3 text-center">Зал "Сад"</h3>
-      
-      <Carousel className="w-full">
-        <CarouselContent>
-          {images.map((image, index) => (
-            <CarouselItem key={index}>
-              <Card className="border-elegant overflow-hidden">
-                <CardContent className="p-0">
-                  <div className="aspect-video relative">
-                    <img 
-                      src={image.url} 
-                      alt={image.description}
-                      className="w-full h-full object-cover" 
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-2">
-                      <p className="text-white text-sm text-center">{image.description}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="-left-6" />
-        <CarouselNext className="-right-6" />
-      </Carousel>
+    <div className="animate-fade-in w-full max-w-md">
+      <h3 className="text-lg font-medium text-elegant-dark mb-3">Галерея места</h3>
+      <div className="grid grid-cols-3 gap-2">
+        {images.map((image, index) => (
+          <div key={index} className="overflow-hidden rounded-md border border-elegant">
+            <AspectRatio ratio={1 / 1}>
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="object-cover h-full w-full hover:scale-110 transition-transform duration-300"
+              />
+            </AspectRatio>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

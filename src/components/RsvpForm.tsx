@@ -8,7 +8,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Имя должно содержать минимум 2 символа" }),
-  telegram: z.string().min(1, { message: "Пожалуйста, укажите ваш ник в Telegram" }),
+  email: z.string().email({ message: "Пожалуйста, введите корректный email" }),
+  guestCount: z.string().min(1, { message: "Пожалуйста, укажите количество гостей" }),
 });
 
 type RsvpFormProps = {
@@ -22,7 +23,8 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      telegram: "",
+      email: "",
+      guestCount: "1",
     },
   });
 
@@ -30,20 +32,9 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
     setIsSubmitting(true);
     
     try {
-      // Формируем данные для отправки
-      const formData = new FormData();
-      formData.append('name', values.name);
-      formData.append('telegram', values.telegram);
-      formData.append('_subject', 'Новое подтверждение на День Рождения');
-      
-      // Отправляем данные через FormSubmit
-      await fetch('https://formsubmit.co/xEsseax@yandex.ru', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Accept': 'application/json',
-        },
-      });
+      // Здесь будет отправка данных на сервер
+      // Симулируем задержку
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
       // Вызываем функцию успешного подтверждения
       onSuccess();
@@ -77,12 +68,26 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
         
         <FormField
           control={form.control}
-          name="telegram"
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Ник в Telegram для связи</FormLabel>
+              <FormLabel>Email для связи</FormLabel>
               <FormControl>
-                <Input placeholder="@username" {...field} />
+                <Input placeholder="ivan@example.com" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
+        <FormField
+          control={form.control}
+          name="guestCount"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Количество гостей</FormLabel>
+              <FormControl>
+                <Input type="number" min="1" max="5" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

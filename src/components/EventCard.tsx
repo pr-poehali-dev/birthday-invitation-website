@@ -3,7 +3,7 @@ import {
   MapPin, 
   Users,
   Film, 
-  Popcorn,
+  Pizza, 
   ExternalLink
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -66,7 +66,7 @@ const EventCard = ({
                 <div className="flex-shrink-0 mt-0.5">
                   {index === 0 && <Users size={18} className="text-elegant-accent" />}
                   {index === 1 && <Film size={18} className="text-elegant-accent" />}
-                  {index === 2 && <Popcorn size={18} className="text-elegant-accent" />}
+                  {index === 2 && <Pizza size={18} className="text-elegant-accent" />}
                 </div>
                 <div>
                   <p className="font-medium">{item.time}</p>

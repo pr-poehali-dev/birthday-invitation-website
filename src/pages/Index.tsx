@@ -3,7 +3,7 @@ import {
   Card, 
   CardContent
 } from "@/components/ui/card";
-import { Check, CarIcon } from "lucide-react";
+import { Check, MapPin } from "lucide-react";
 import InvitationHeader from "@/components/InvitationHeader";
 import EventCard from "@/components/EventCard";
 import RsvpForm from "@/components/RsvpForm";
@@ -30,42 +30,33 @@ const Index = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-elegant-light py-10">
       <div className="container max-w-3xl px-4">
         <InvitationHeader 
-          title="Happy fckng B-day party" 
-          subtitle="будет весело (но это не точно)" 
+          title="Приглашение на день рождения" 
+          subtitle="Приходите разделить с нами этот особенный день" 
         />
         
         <div className="flex flex-col md:flex-row gap-6 mb-10 w-full justify-center">
           <div className="flex flex-col gap-6">
             <EventCard 
-              date="18 мая 2025, воскресенье"
-              time="с 18:20 до 22:00"
-              location="Кинотеатр «Секрет», зал «Сад»"
-              locationDetails="ул. Щербаковская, 53к17 (м. Измайлово, м. Партизанская, м. Семёновская)"
-              mapLink="https://clck.ru/3CegJG"
+              date="18 мая 2023, воскресенье"
+              time="с 18:00 до 22:00"
+              location="Лофт «Атмосфера»"
+              locationDetails="ул. Пушкина, 10 (5 мин. от м. Центральная)"
+              mapLink="https://maps.google.com"
               schedule={[
                 {
-                  time: "18:20 - 18:40",
-                  activity: "Сбор гостей"
+                  time: "18:00 - 19:00",
+                  activity: "Встреча гостей, приветственные напитки"
                 },
                 {
-                  time: "18:40 - 20:40",
-                  activity: "Просмотр фильма \"Конклав\""
+                  time: "19:00 - 21:00",
+                  activity: "Просмотр фильма «Кардинал»"
                 },
                 {
-                  time: "20:40 - 22:00",
-                  activity: "Обнимаемся, разъезжаемся, готовимся не умереть утром понедельника"
+                  time: "21:00 - 22:00",
+                  activity: "Пицца, попкорн и дружеское общение"
                 }
               ]}
             />
-            
-            <div className="w-full max-w-md mx-auto mb-4 p-4 bg-white border border-elegant rounded-lg">
-              <div className="flex items-start gap-2 text-elegant-dark">
-                <CarIcon size={18} className="text-elegant-accent mt-1 flex-shrink-0" />
-                <p className="text-sm">
-                  <span className="font-semibold">Парковка:</span> У кинотеатра нет собственной парковки, но поблизости есть городские парковочные места.
-                </p>
-              </div>
-            </div>
             
             <VenueGallery />
           </div>
