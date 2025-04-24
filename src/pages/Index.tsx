@@ -13,9 +13,17 @@ const Index = () => {
 
   const handleRsvpSuccess = () => {
     setRsvpConfirmed(true);
-    // В реальном приложении можно сохранить статус в localStorage
-    // localStorage.setItem('rsvpConfirmed', 'true');
+    // Сохраняем статус в localStorage, чтобы он сохранялся при перезагрузке страницы
+    localStorage.setItem('rsvpConfirmed', 'true');
   };
+
+  // Проверяем статус при загрузке страницы
+  useState(() => {
+    const savedStatus = localStorage.getItem('rsvpConfirmed');
+    if (savedStatus === 'true') {
+      setRsvpConfirmed(true);
+    }
+  });
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-elegant-light py-10">

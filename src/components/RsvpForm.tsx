@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CalendarPlus, Check } from "lucide-react";
+import { CalendarPlus } from "lucide-react";
 
 type RsvpFormProps = {
   onSuccess: () => void;
@@ -13,7 +13,6 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    guests: "1",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,23 +25,45 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
     setIsSubmitting(true);
     
     try {
-      // В реальном приложении здесь будет отправка на сервер или API
-      // например: await fetch('/api/rsvp', { method: 'POST', body: JSON.stringify(formData) });
+      // Настройка отправки данных через EmailJS или другой сервис
+      const serviceId = "default_service"; // Замените на ваш serviceId в EmailJS
+      const templateId = "template_birthday_rsvp"; // Замените на ваш templateId
+      const userId = "user_yourUserId"; // Замените на ваш userId
+
+      const templateParams = {
+        to_email: "xEsseax@yandex.ru",
+        from_name: formData.name,
+        from_email: formData.email,
+        message: `${formData.name} подтвердил(а) присутствие на дне рождения.`,
+      };
+
+      // В реальном приложении используйте EmailJS или аналогичный сервис:
+      // await emailjs.send(serviceId, templateId, templateParams, userId);
       
-      // Имитация отправки данных
+      // Имитация отправки данных (в реальном проекте замените на реальный запрос)
+      console.log("Отправка данных на почту xEsseax@yandex.ru:", templateParams);
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      console.log("Отправлены данные:", formData);
       onSuccess();
     } catch (error) {
       console.error("Ошибка при отправке:", error);
+      alert("Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full max-w-md space-y-4">
+    <form 
+      onSubmit={handleSubmit} 
+      className="w-full max-w-md space-y-4"
+      action="https://formsubmit.co/xEsseax@yandex.ru" 
+      method="POST"
+    >
+      <input type="hidden" name="_subject" value="Новое подтверждение на день рождения!" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value={window.location.href} />
+      
       <div className="space-y-2">
         <Label htmlFor="name">Ваше имя</Label>
         <Input
@@ -66,21 +87,6 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
           value={formData.email}
           onChange={handleChange}
           placeholder="your@email.com"
-          className="border-elegant-muted"
-        />
-      </div>
-      
-      <div className="space-y-2">
-        <Label htmlFor="guests">Количество гостей</Label>
-        <Input
-          id="guests"
-          name="guests"
-          type="number"
-          min="1"
-          max="5"
-          required
-          value={formData.guests}
-          onChange={handleChange}
           className="border-elegant-muted"
         />
       </div>
