@@ -1,44 +1,36 @@
 
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 const VenueGallery: React.FC = () => {
-  // Массив заглушек для галереи
-  const galleryImages = [
-    {
-      src: "/placeholder.svg",
-      alt: "Интерьер лофта",
-    },
-    {
-      src: "/placeholder.svg",
-      alt: "Кинозал",
-    },
-    {
-      src: "/placeholder.svg",
-      alt: "Зона отдыха",
-    },
-  ];
-
   return (
     <Card className="invitation-card animate-fade-in">
-      <CardContent className="p-4">
-        <h3 className="text-lg font-medium text-elegant-dark mb-3">
+      <CardHeader>
+        <CardTitle className="text-xl font-medium text-elegant-dark">
           Место проведения
-        </h3>
-        <div className="grid grid-cols-3 gap-2">
-          {galleryImages.map((image, index) => (
-            <div 
-              key={index} 
-              className="aspect-square rounded-md overflow-hidden hover:opacity-90 transition-opacity"
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <div className="grid grid-cols-2 gap-2">
+          <AspectRatio ratio={1 / 1} className="bg-muted rounded-md overflow-hidden">
+            <img
+              src="/placeholder.svg"
+              alt="Лофт интерьер"
+              className="object-cover h-full w-full transition-transform hover:scale-105 duration-300"
+            />
+          </AspectRatio>
+          <AspectRatio ratio={1 / 1} className="bg-muted rounded-md overflow-hidden">
+            <img
+              src="/placeholder.svg" 
+              alt="Кинозал"
+              className="object-cover h-full w-full transition-transform hover:scale-105 duration-300"
+            />
+          </AspectRatio>
         </div>
+        <p className="text-sm text-muted-foreground text-center">
+          Уютный лофт с проектором и комфортной зоной для просмотра
+        </p>
       </CardContent>
     </Card>
   );

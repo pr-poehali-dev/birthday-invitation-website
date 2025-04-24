@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface RsvpFormProps {
   onSuccess: () => void;
@@ -19,16 +18,17 @@ const RsvpForm: React.FC<RsvpFormProps> = ({ onSuccess }) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Имитация отправки данных на сервер
-    try {
-      // В реальном проекте здесь был бы API-запрос
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      onSuccess();
-    } catch (error) {
-      console.error("Ошибка при отправке формы:", error);
-    } finally {
+    // Имитация отправки формы (в реальном приложении здесь будет API запрос)
+    setTimeout(() => {
       setIsSubmitting(false);
-    }
+      onSuccess();
+    }, 1500);
+    
+    // Пример реальной отправки через FormSubmit
+    // const form = e.target as HTMLFormElement;
+    // form.action = "https://formsubmit.co/your-email@example.com";
+    // form.method = "POST";
+    // form.submit();
   };
 
   return (
@@ -40,9 +40,9 @@ const RsvpForm: React.FC<RsvpFormProps> = ({ onSuccess }) => {
         <Input
           id="name"
           type="text"
+          placeholder="Иван Иванов"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Иван Иванов"
           required
           className="form-input"
         />
@@ -55,9 +55,9 @@ const RsvpForm: React.FC<RsvpFormProps> = ({ onSuccess }) => {
         <Input
           id="email"
           type="email"
+          placeholder="ivan@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="example@mail.com"
           required
           className="form-input"
         />
@@ -67,23 +67,22 @@ const RsvpForm: React.FC<RsvpFormProps> = ({ onSuccess }) => {
         <Label htmlFor="guests" className="form-label">
           Количество гостей
         </Label>
-        <Select value={guests} onValueChange={setGuests} required>
-          <SelectTrigger id="guests" className="form-input">
-            <SelectValue placeholder="Выберите количество" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="1">1</SelectItem>
-            <SelectItem value="2">2</SelectItem>
-            <SelectItem value="3">3</SelectItem>
-            <SelectItem value="4">4</SelectItem>
-          </SelectContent>
-        </Select>
+        <Input
+          id="guests"
+          type="number"
+          min="1"
+          max="5"
+          value={guests}
+          onChange={(e) => setGuests(e.target.value)}
+          required
+          className="form-input"
+        />
       </div>
 
       <Button
         type="submit"
-        disabled={isSubmitting}
         className="w-full bg-elegant-accent hover:bg-elegant-accent/90"
+        disabled={isSubmitting}
       >
         {isSubmitting ? "Отправка..." : "Подтвердить участие"}
       </Button>
