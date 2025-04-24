@@ -24,18 +24,27 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Простая отправка через стандартный mailto: протокол 
-    // Это откроет почтовый клиент пользователя
-    const mailtoLink = `mailto:xEsseax@yandex.ru?subject=Подтверждение на день рождения&body=Имя: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AЯ подтверждаю своё присутствие на дне рождения 18 мая.`;
-    
-    window.location.href = mailtoLink;
-    
-    // Показываем успешное подтверждение даже если пользователь
-    // закрыл почтовый клиент без отправки
-    setTimeout(() => {
+    try {
+      // Отправка данных через FormSubmit сервис
+      const formElement = e.target as HTMLFormElement;
+      const formData = new FormData(formElement);
+      
+      await fetch("https://formsubmit.co/xEsseax@yandex.ru", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json',
+        },
+      });
+      
+      // Показываем успешное подтверждение
       onSuccess();
+    } catch (error) {
+      console.error("Ошибка при отправке формы:", error);
+      alert("Произошла ошибка при отправке. Пожалуйста, попробуйте позже.");
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -43,6 +52,10 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
       onSubmit={handleSubmit} 
       className="w-full max-w-md space-y-4"
     >
+      {/* Скрытые поля для настройки FormSubmit */}
+      <input type="hidden" name="_subject" value="Подтверждение на день рождения" />
+      <input type="hidden" name="_captcha" value="false" />
+      
       <div className="space-y-2">
         <Label htmlFor="name">Ваше имя</Label>
         <Input
@@ -85,10 +98,6 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
           </>
         )}
       </Button>
-      
-      <p className="text-xs text-center text-muted-foreground mt-2">
-        Нажимая кнопку, вы соглашаетесь на открытие почтового клиента
-      </p>
     </form>
   );
 };
