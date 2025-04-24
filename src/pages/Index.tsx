@@ -6,15 +6,15 @@ import {
 import { Check } from "lucide-react";
 import InvitationHeader from "@/components/InvitationHeader";
 import EventCard from "@/components/EventCard";
-import RsvpButton from "@/components/RsvpButton";
+import RsvpForm from "@/components/RsvpForm";
 
 const Index = () => {
   const [rsvpConfirmed, setRsvpConfirmed] = useState(false);
 
-  const handleRsvp = () => {
+  const handleRsvpSuccess = () => {
     setRsvpConfirmed(true);
-    // В реальном приложении здесь можно отправить данные на сервер
-    setTimeout(() => setRsvpConfirmed(false), 3000);
+    // В реальном приложении можно сохранить статус в localStorage
+    // localStorage.setItem('rsvpConfirmed', 'true');
   };
 
   return (
@@ -50,12 +50,17 @@ const Index = () => {
               </p>
               
               {rsvpConfirmed ? (
-                <div className="flex items-center gap-2 text-green-600 animate-fade-in">
-                  <Check className="w-5 h-5" />
-                  <span>Ваш ответ принят!</span>
+                <div className="flex flex-col items-center gap-2 text-green-600 animate-fade-in">
+                  <div className="flex items-center gap-2">
+                    <Check className="w-5 h-5" />
+                    <span>Ваш ответ принят!</span>
+                  </div>
+                  <p className="text-sm text-elegant-dark mt-2">
+                    Спасибо за подтверждение. Ждём вас на празднике!
+                  </p>
                 </div>
               ) : (
-                <RsvpButton onClick={handleRsvp} />
+                <RsvpForm onSuccess={handleRsvpSuccess} />
               )}
             </CardContent>
           </Card>
