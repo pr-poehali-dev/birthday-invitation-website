@@ -10,6 +10,7 @@ import EventCard from "@/components/EventCard";
 import RsvpForm from "@/components/RsvpForm";
 import VenueGallery from "@/components/VenueGallery";
 import GiftSection from "@/components/GiftSection";
+import FilmDetails from "@/components/FilmDetails";
 
 const Index = () => {
   const [rsvpConfirmed, setRsvpConfirmed] = useState(false);
@@ -32,42 +33,53 @@ const Index = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-elegant-light py-10">
       <div className="container max-w-3xl px-4">
         <InvitationHeader 
-          title="Приглашение на день рождения" 
-          subtitle="Приходите разделить с нами этот особенный день" 
+          title="Happy fckng B-Day party" 
+          subtitle="Будет весело, но это не точно" 
         />
         
         <div className="flex flex-col md:flex-row gap-6 mb-10 w-full justify-center">
           <div className="flex flex-col gap-6">
             <EventCard 
-              date="18 мая, суббота"
-              time="с 18:00 до 22:00"
-              location="Лофт «Атмосфера»"
-              locationDetails="ул. Пушкина, 10 (5 мин. от м. Центральная)"
-              mapLink="https://maps.google.com"
+              date="19 мая, воскресенье"
+              time="с 18:20 до 22:00"
+              location="Кинотеатр «Секрет», зал «Сад»"
+              locationDetails="Сельскохозяйственная 15с3 (м. Ботанический сад, 6-10 мин. пешком)"
+              mapLink="https://yandex.ru/maps/-/CHfFr0zq"
+              parkingInfo="Своей парковки у кинотеатра нет, но можно воспользоваться городскими."
               schedule={[
                 {
-                  time: "18:00 - 19:00",
-                  activity: "Встреча гостей, приветственные напитки"
+                  time: "18:20 - 18:40",
+                  activity: "Сбор гостей, welcome drink"
+                },
+                {
+                  time: "18:40 и до конца",
+                  activity: "Пицца, попкорн и дружеское общение"
                 },
                 {
                   time: "19:00 - 21:00",
-                  activity: "Просмотр фильма «Кардинал»"
+                  activity: "Просмотр фильма «Конклав»"
                 },
                 {
-                  time: "21:00 - 22:00",
-                  activity: "Пицца, попкорн и дружеское общение"
+                  time: "21:40 - 22:00",
+                  activity: "Обнимаемся, расходимся и пытаемся выжить следующим утром"
                 }
               ]}
             />
             
-            <GiftSection />
+            <FilmDetails 
+              title="Конклав"
+              rating="7.2"
+              description="Фильм о конклаве по избранию нового Папы Римского. Политические интриги, напряжение и неожиданные повороты в атмосфере Ватикана."
+              watchLink="https://wink.ru/movies/konklav-year-2024"
+              posterUrl="https://cdn.poehali.dev/files/156c31ee-7614-4515-9542-bf9f455e392f.jpg"
+            />
           </div>
           
           <div className="flex flex-col gap-6">
             <Card className="invitation-card animate-fade-in max-w-md bg-white">
               <CardContent className="p-6 flex flex-col items-center justify-center h-full">
                 <img 
-                  src="/placeholder.svg" 
+                  src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" 
                   alt="Праздничное изображение" 
                   className="w-32 h-32 mb-6 rounded-full object-cover"
                 />
@@ -91,6 +103,8 @@ const Index = () => {
                 )}
               </CardContent>
             </Card>
+            
+            <GiftSection />
             
             <VenueGallery />
           </div>

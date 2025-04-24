@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CalendarIcon, ClockIcon, MapPinIcon } from "lucide-react";
+import { CalendarIcon, ClockIcon, MapPinIcon, ParkingIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
@@ -16,6 +16,7 @@ interface EventCardProps {
   location: string;
   locationDetails: string;
   mapLink: string;
+  parkingInfo: string;
   schedule: ScheduleItem[];
 }
 
@@ -25,6 +26,7 @@ const EventCard: React.FC<EventCardProps> = ({
   location,
   locationDetails,
   mapLink,
+  parkingInfo,
   schedule,
 }) => {
   return (
@@ -65,7 +67,15 @@ const EventCard: React.FC<EventCardProps> = ({
           </div>
         </div>
 
-        <Separator className="my-1 bg-elegant-border" />
+        <div className="flex items-start gap-3">
+          <ParkingIcon className="w-5 h-5 text-elegant-accent shrink-0 mt-0.5" />
+          <div>
+            <h3 className="font-medium text-elegant-dark">Парковка</h3>
+            <p className="text-sm text-muted-foreground">{parkingInfo}</p>
+          </div>
+        </div>
+
+        <Separator className="my-1 bg-violet-100" />
 
         <div>
           <h3 className="font-medium text-elegant-dark mb-3">Программа</h3>
