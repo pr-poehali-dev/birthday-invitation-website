@@ -14,8 +14,8 @@ const VenueGallery = () => {
       description: "Проекционный экран в зале 'Сад'"
     },
     {
-      url: "https://cdn.poehali.dev/files/c23f6a4c-4951-4784-ba70-c379664e7314.png",
-      description: "Декоративные элементы в интерьере"
+      url: "https://cdn.poehali.dev/files/fe21c632-cadb-4032-a437-208e089990ce.png",
+      description: "Световая инсталляция с подвесными птицами"
     },
     {
       url: "https://cdn.poehali.dev/files/8fb97502-c3ee-4edb-8b21-3dbdb41cfa4e.png",

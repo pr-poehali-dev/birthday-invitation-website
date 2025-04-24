@@ -3,7 +3,7 @@ import {
   Card, 
   CardContent
 } from "@/components/ui/card";
-import { Check } from "lucide-react";
+import { Check, CarIcon } from "lucide-react";
 import InvitationHeader from "@/components/InvitationHeader";
 import EventCard from "@/components/EventCard";
 import RsvpForm from "@/components/RsvpForm";
@@ -57,6 +57,15 @@ const Index = () => {
                 }
               ]}
             />
+            
+            <div className="w-full max-w-md mx-auto mb-4 p-4 bg-white border border-elegant rounded-lg">
+              <div className="flex items-start gap-2 text-elegant-dark">
+                <CarIcon size={18} className="text-elegant-accent mt-1 flex-shrink-0" />
+                <p className="text-sm">
+                  <span className="font-semibold">Парковка:</span> У кинотеатра нет собственной парковки, но поблизости есть городские парковочные места.
+                </p>
+              </div>
+            </div>
             
             <VenueGallery />
           </div>
