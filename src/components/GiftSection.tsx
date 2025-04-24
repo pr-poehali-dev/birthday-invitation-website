@@ -1,65 +1,65 @@
-import { Wallet, Gift, XCircle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
+import React from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { GiftIcon, Heart, XCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
-const GiftSection = () => {
+const GiftSection: React.FC = () => {
   return (
-    <Card className="invitation-card animate-fade-in w-full max-w-md bg-white border-elegant">
-      <CardHeader>
-        <CardTitle className="text-lg font-medium text-center text-elegant-dark">
-          О подарках
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="flex items-start gap-3">
-          <Wallet size={20} className="text-elegant-accent mt-1 flex-shrink-0" />
+    <Card className="invitation-card animate-fade-in">
+      <CardContent className="p-4">
+        <h3 className="text-lg font-medium text-elegant-dark mb-3 flex items-center gap-2">
+          <GiftIcon className="w-5 h-5 text-elegant-accent" />
+          Информация о подарках
+        </h3>
+        
+        <div className="space-y-4">
           <div>
-            <p className="text-elegant-dark text-sm">
-              Лучший подарок — грамотный инвест портфель и закрытые фин. планы, поэтому можно поздравить здесь:
+            <p className="text-sm text-elegant-dark flex items-center gap-2">
+              <Heart className="w-4 h-4 text-elegant-accent" />
+              <span className="font-medium">Лучший подарок</span>
             </p>
-            <Button 
-              variant="link" 
-              className="p-0 h-auto text-elegant-accent hover:text-elegant-accent/80 text-sm"
-              onClick={() => window.open("https://www.tinkoff.ru/rm/r_aXFahIcQRA.kXVDrhjCbq/AxM6832821", "_blank")}
-            >
-              Tinkoff
-            </Button>
+            <p className="text-sm text-muted-foreground mt-1">
+              Грамотный инвест портфель и закрытые финансовые планы.
+              <a 
+                href="https://www.tinkoff.ru/rm/r_aXFahIcQRA.kXVDrhjCbq/AxM6832821" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block text-elegant-accent hover:underline mt-1"
+              >
+                Отправить поздравление через Tinkoff
+              </a>
+            </p>
           </div>
-        </div>
-        
-        <Separator className="my-3" />
-        
-        <div className="flex items-start gap-3">
-          <Gift size={20} className="text-elegant-accent mt-1 flex-shrink-0" />
+          
+          <Separator />
+          
           <div>
-            <p className="text-elegant-dark text-sm">
-              Как альтернатива — вишлист:
+            <p className="text-sm text-elegant-dark font-medium">Альтернатива</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              Не знаете, что подарить? Загляните в мой вишлист:
+              <a 
+                href="https://followish.io/mywishlist/cvcvvjmgttfirm" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block text-elegant-accent hover:underline mt-1"
+              >
+                Посмотреть вишлист
+              </a>
             </p>
-            <Button 
-              variant="link" 
-              className="p-0 h-auto text-elegant-accent hover:text-elegant-accent/80 text-sm"
-              onClick={() => window.open("https://followish.io/mywishlist/cvcvvjmgttfirm", "_blank")}
-            >
-              Followish.io/mywishlist
-            </Button>
           </div>
-        </div>
-        
-        <Separator className="my-3" />
-        
-        <div className="flex items-start gap-3">
-          <XCircle size={20} className="text-rose-500 mt-1 flex-shrink-0" />
+          
+          <Separator />
+          
           <div>
-            <p className="text-elegant-dark text-sm font-medium">
-              Пожалуйста, воздержитесь от:
+            <p className="text-sm text-elegant-dark flex items-center gap-2">
+              <XCircle className="w-4 h-4 text-elegant-accent" />
+              <span className="font-medium">Антивишлист</span>
             </p>
-            <ul className="text-muted-foreground text-sm list-disc pl-5 mt-1 space-y-1">
-              <li>Декоративных предметов (статуэтки, модели, текстиль)</li>
-              <li>Посуды</li>
-              <li>Еды (особенно сладкой)</li>
-              <li>Косметики</li>
-            </ul>
+            <p className="text-sm text-muted-foreground mt-1">
+              Пожалуйста, без декоративных предметов (статуэтки, модели, текстиль), 
+              посуды, еды (особенно сладкой) и косметики.
+            </p>
           </div>
         </div>
       </CardContent>

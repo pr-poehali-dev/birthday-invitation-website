@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { 
   Card, 
@@ -38,7 +39,7 @@ const Index = () => {
         <div className="flex flex-col md:flex-row gap-6 mb-10 w-full justify-center">
           <div className="flex flex-col gap-6">
             <EventCard 
-              date="18 мая 2023, воскресенье"
+              date="18 мая, суббота"
               time="с 18:00 до 22:00"
               location="Лофт «Атмосфера»"
               locationDetails="ул. Пушкина, 10 (5 мин. от м. Центральная)"
@@ -63,7 +64,7 @@ const Index = () => {
           </div>
           
           <div className="flex flex-col gap-6">
-            <Card className="invitation-card animate-fade-in max-w-md bg-white border-elegant">
+            <Card className="invitation-card animate-fade-in max-w-md bg-white">
               <CardContent className="p-6 flex flex-col items-center justify-center h-full">
                 <img 
                   src="/placeholder.svg" 

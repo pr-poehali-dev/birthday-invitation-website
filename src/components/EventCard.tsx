@@ -1,5 +1,7 @@
-import { CalendarDays, Clock, MapPin } from "lucide-react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MapPin, Calendar, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface ScheduleItem {
@@ -12,80 +14,72 @@ interface EventCardProps {
   time: string;
   location: string;
   locationDetails: string;
-  mapLink?: string;
-  schedule?: ScheduleItem[];
+  mapLink: string;
+  schedule: ScheduleItem[];
 }
 
-const EventCard = ({
+const EventCard: React.FC<EventCardProps> = ({
   date,
   time,
   location,
   locationDetails,
   mapLink,
-  schedule
-}: EventCardProps) => {
+  schedule,
+}) => {
   return (
-    <Card className="invitation-card animate-fade-in w-full max-w-md bg-white border-elegant">
+    <Card className="invitation-card animate-fade-in">
       <CardHeader className="pb-2">
-        <div className="w-full text-center">
-          <div className="inline-block bg-elegant-secondary/20 text-elegant-accent font-medium px-3 py-1 rounded-full text-sm mb-4">
-            Приглашение
-          </div>
-        </div>
+        <CardTitle className="text-xl font-playfair text-elegant-dark">
+          Детали мероприятия
+        </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-5">
+      <CardContent className="space-y-4">
         <div className="flex items-start gap-3">
-          <CalendarDays size={20} className="text-elegant-accent mt-1 flex-shrink-0" />
+          <Calendar className="w-5 h-5 text-elegant-accent mt-0.5" />
           <div>
-            <p className="text-elegant-dark font-medium">Дата</p>
-            <p className="text-muted-foreground text-sm">{date}</p>
+            <h3 className="font-medium text-elegant-dark">Дата</h3>
+            <p className="text-muted-foreground">{date}</p>
           </div>
         </div>
-        
+
         <div className="flex items-start gap-3">
-          <Clock size={20} className="text-elegant-accent mt-1 flex-shrink-0" />
+          <Clock className="w-5 h-5 text-elegant-accent mt-0.5" />
           <div>
-            <p className="text-elegant-dark font-medium">Время</p>
-            <p className="text-muted-foreground text-sm">{time}</p>
+            <h3 className="font-medium text-elegant-dark">Время</h3>
+            <p className="text-muted-foreground">{time}</p>
           </div>
         </div>
-        
+
         <div className="flex items-start gap-3">
-          <MapPin size={20} className="text-elegant-accent mt-1 flex-shrink-0" />
+          <MapPin className="w-5 h-5 text-elegant-accent mt-0.5" />
           <div>
-            <p className="text-elegant-dark font-medium">Место</p>
-            <p className="text-muted-foreground text-sm">{location}</p>
-            <p className="text-muted-foreground text-sm">{locationDetails}</p>
-            
-            {mapLink && (
-              <Button 
-                variant="link" 
-                className="p-0 h-auto text-elegant-accent hover:text-elegant-accent/80 text-sm"
-                onClick={() => window.open(mapLink, "_blank")}
+            <h3 className="font-medium text-elegant-dark">Место</h3>
+            <p className="text-muted-foreground">{location}</p>
+            <p className="text-sm text-muted-foreground">{locationDetails}</p>
+            <Button
+              variant="link"
+              className="p-0 h-auto text-elegant-accent hover:text-elegant-accent/80 mt-1"
+              onClick={() => window.open(mapLink, "_blank")}
+            >
+              Открыть карту
+            </Button>
+          </div>
+        </div>
+
+        <div className="pt-2">
+          <h3 className="font-medium text-elegant-dark mb-2">Программа</h3>
+          <div className="space-y-2">
+            {schedule.map((item, index) => (
+              <div
+                key={index}
+                className="text-sm border-l-2 border-elegant-accent pl-3 py-1"
               >
-                Открыть на карте
-              </Button>
-            )}
+                <p className="font-medium text-elegant-dark">{item.time}</p>
+                <p className="text-muted-foreground">{item.activity}</p>
+              </div>
+            ))}
           </div>
         </div>
-        
-        {schedule && schedule.length > 0 && (
-          <div className="border-t border-elegant-border pt-4 mt-4">
-            <p className="text-elegant-dark font-medium mb-3">Расписание</p>
-            <ul className="space-y-3">
-              {schedule.map((item, index) => (
-                <li key={index} className="flex gap-3">
-                  <div className="w-24 flex-shrink-0 text-sm text-elegant-accent font-medium">
-                    {item.time}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {item.activity}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </CardContent>
     </Card>
   );
