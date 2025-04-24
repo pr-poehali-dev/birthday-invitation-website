@@ -12,7 +12,7 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
+    telegram: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,15 +70,14 @@ const RsvpForm = ({ onSuccess }: RsvpFormProps) => {
       </div>
       
       <div className="space-y-2">
-        <Label htmlFor="email">Email для связи</Label>
+        <Label htmlFor="telegram">Ник в Telegram для связи</Label>
         <Input
-          id="email"
-          name="email"
-          type="email"
+          id="telegram"
+          name="telegram"
           required
-          value={formData.email}
+          value={formData.telegram}
           onChange={handleChange}
-          placeholder="your@email.com"
+          placeholder="@username"
           className="border-elegant-muted"
         />
       </div>

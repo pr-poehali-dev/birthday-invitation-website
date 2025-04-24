@@ -29,19 +29,28 @@ const Index = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-elegant-light py-10">
       <div className="container max-w-3xl px-4">
         <InvitationHeader 
-          title="Приглашение на День Рождения" 
-          subtitle="Приглашаем разделить с нами этот особенный день" 
+          title="Happy fckng B-day party" 
+          subtitle="будет весело (но это не точно)" 
         />
         
         <div className="flex flex-col md:flex-row gap-6 mb-10 w-full justify-center">
           <EventCard 
             date="18 мая, суббота"
-            time="с 18:00 до 22:00"
+            time="с 18:20 до 22:00"
             location="Лофт 'Атмосфера'"
-            activities={[
-              "Просмотр фильма 'Кардинал'",
-              "Угощение пиццей",
-              "Попкорн и напитки"
+            schedule={[
+              {
+                time: "18:20 - 18:40",
+                activity: "Сбор гостей"
+              },
+              {
+                time: "18:40 - 20:40",
+                activity: "Просмотр фильма \"Конклав\""
+              },
+              {
+                time: "20:40 - 22:00",
+                activity: "Обнимаемся, разъезжаемся, готовимся не умереть утром понедельника"
+              }
             ]}
           />
           
